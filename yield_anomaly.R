@@ -1,0 +1,16 @@
+#' Almond Yield Anomaly
+#' 
+#' function to calculate the almond yield anomaly
+#' @param temp_min the average minimum temperature in February (for one year)
+#' @param precip the total January precipitation
+#' 
+#' Byrne, P., Garcia, H., and Pohl, Y. 
+#' @source
+#' Lobell et al.
+
+
+yield_anomaly = function(temp_min, precip, t1=-0.015, t2=-0.0046, p1=-0.07, p2=0.0043, inter=0.28) {
+  
+  mean_deviation= t1*temp_min + t2*temp_min^2 + p1*precip + p2*precip^2 + inter
+  return(mean_deviation)
+}
