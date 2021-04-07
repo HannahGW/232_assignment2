@@ -1,6 +1,6 @@
 ---
 title: "yield_anomaly_function"
-author: "Hannah Garcia-Wickstrum"
+author: "Pat, Bryne, Hannah Garcia, and Yani Pohl"
 date: "4/7/2021"
 output: html_document
 ---
@@ -10,6 +10,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r}
-#test function here
+# Directions: in an Rmarkdown document, write code to read in the “clim.txt”, (attached here) do any subsetting required for input to your function, run the function and save results
+
+# Summarize the results as follows
+# The end product we are looking for: calculate the almond yield anomaly for each year, and summarize the data. We will leave how to summarize the data up to you. Think about what metrics would be best to explain the trends in outputs. Tables, graphs, and summary metrics are all acceptable – these you will generate outside the function in your Rmarkdown.  Make sure to include axis labels, units and captions.
+
+#  Finally, write one paragraph summarizing your findings. Submit pdf of rmarkdown.and the function.R file to gauchospace – Submit as a group
 ```
 
