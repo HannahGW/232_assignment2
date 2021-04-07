@@ -1,19 +1,51 @@
 #' Almond Yield Anomaly
 #' 
 #' function to calculate the almond yield anomaly
-#' @param temp_min the average minimum temperature in February (for one year)
-#' @param precip the total January precipitation
+#' @param input.dataframe A dataframe with daily climate observations. Must include columns for month (named "month"), year (named "year"), daily minimum temperature (titled "tmin_c"), and daily precip (named "precip")
+#' @param year.range A vector of the years for which you would like to calculate yield anomaly
 #' 
 #' @authors
 #' Pat Byrne, Hannah Garcia, and Yani Pohl 
 #' @source
 #' Lobell, D. B., Field, C. B., Cahill, K. N., & Bonfils, C. (2006). Impacts of future climate change on California perennial crop yields: Model projections with climate and crop uncertainties. Agricultural and Forest Meteorology, 141(2–4), 208–218. https://doi.org/10.1016/j.agrformet.2006.10.006
 
+library(tidyverse)
+library(lubridate)
 
-yield_anomaly = function(temp_min, precip, t1=-0.015, t2=-0.0046, p1=-0.07, p2=0.0043, inter=0.28) {
+
+clim.df <- read.table('clim_edited.txt',header = TRUE) %>% 
+  mutate(
+    D = as.Date(D)
+  )
+
+
+yield_anomaly = function(input.dataframe, years.calc, t1=-0.015, t2=-0.0046, p1=-0.07, p2=0.0043, inter=0.28) {
   
-  mean_deviation= t1*temp_min + t2*temp_min^2 + p1*precip + p2*precip^2 + inter
-  return(mean_deviation)
+  calc.anomaly <- c() # Defining the vector in which the function will store calculated anomalies
+  
+  for (i in 1:length(years.calc)) {
+    intermed.Jan <- input.dataframe %>% filter(year == years.calc[i],
+                                           month == 1)
+    intermed.Feb <- input.dataframe %>% filter(year == years.calc[i],
+                                               month == 2)
+    
+    temp_min <- mean(intermed.Feb$tmin_c)
+    precip <- sum(intermed.Jan$precip)
+    
+    calc.anomaly[i] <- t1*temp_min + t2*temp_min^2 + p1*precip + p2*precip^2 + inter
+  }
+  
+  res.matrix <- matrix(,nrow = length(years.calc), ncol = 2)
+  res.matrix[,1] = years.calc
+  res.matrix[,2] = calc.anomaly
+  
+  return(res.matrix)
 }
 
 #instead of temp_min and precip, you would put in one dataframe. and the df has columns temp_min and precip. Within the function, it would have summarize/other function to aggregate the data. 
+
+
+test.func <- yield_anomaly(input.dataframe = clim.df, years.calc = c(2000,2001,2002))
+test.func[1,]
+test.func[2,]
+test.func[3,]
