@@ -4,9 +4,10 @@
 #' @param temp_min the average minimum temperature in February (for one year)
 #' @param precip the total January precipitation
 #' 
-#' Byrne, P., Garcia, H., and Pohl, Y. 
+#' @authors
+#' Pat Byrne, Hannah Garcia, and Yani Pohl 
 #' @source
-#' Lobell et al.
+#' Lobell et al. (2006). Impacts of future climate change on California perennial crop yields: Model projections with climate and crop uncertainties. 
 
 
 yield_anomaly = function(temp_min, precip, t1=-0.015, t2=-0.0046, p1=-0.07, p2=0.0043, inter=0.28) {
