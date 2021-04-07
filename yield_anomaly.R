@@ -1,22 +1,15 @@
 #' Almond Yield Anomaly
 #' 
-#' function to calculate the almond yield anomaly
+#' function to calculate the almond yield difference from the 1980-2003 average (ton/acre)
 #' @param input.dataframe A dataframe with daily climate observations. Must include columns for month (named "month"), year (named "year"), daily minimum temperature (titled "tmin_c"), and daily precip (named "precip")
 #' @param year.range A vector of the years for which you would like to calculate yield anomaly
-#' 
+#' @examples 
+#' yield_anomaly(input.dataframe = clim.df, years.calc = c(2000,2001,2002))
 #' @authors
 #' Pat Byrne, Hannah Garcia, and Yani Pohl 
 #' @source
-#' Lobell, D. B., Field, C. B., Cahill, K. N., & Bonfils, C. (2006). Impacts of future climate change on California perennial crop yields: Model projections with climate and crop uncertainties. Agricultural and Forest Meteorology, 141(2–4), 208–218. https://doi.org/10.1016/j.agrformet.2006.10.006
-
-library(tidyverse)
-library(lubridate)
-
-
-clim.df <- read.table('clim_edited.txt',header = TRUE) %>% 
-  mutate(
-    D = as.Date(D)
-  )
+#' Lobell, D. B., Field, C. B., Cahill, K. N., & Bonfils, C. (2006). Impacts of future climate change on California perennial crop yields: Model projections with climate and crop uncertainties. Agricultural and Forest Meteorology, 141(2–4), 208–218. 
+#' https://doi.org/10.1016/j.agrformet.2006.10.006
 
 
 yield_anomaly = function(input.dataframe, years.calc, t1=-0.015, t2=-0.0046, p1=-0.07, p2=0.0043, inter=0.28) {
@@ -42,10 +35,3 @@ yield_anomaly = function(input.dataframe, years.calc, t1=-0.015, t2=-0.0046, p1=
   return(res.matrix)
 }
 
-#instead of temp_min and precip, you would put in one dataframe. and the df has columns temp_min and precip. Within the function, it would have summarize/other function to aggregate the data. 
-
-
-test.func <- yield_anomaly(input.dataframe = clim.df, years.calc = c(2000,2001,2002))
-test.func[1,]
-test.func[2,]
-test.func[3,]
