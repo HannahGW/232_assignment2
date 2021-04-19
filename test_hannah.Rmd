@@ -1,0 +1,46 @@
+---
+title: "Hannah Scratch"
+author: "Hannah Garcia-Wickstrum"
+date: "4/17/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# Install Packages
+library(tidyverse)
+
+# read in anomaly function
+source("yield_anomaly.R")
+
+# Read in data frame & convert date column (D) to a date
+clim.df <- read.table('clim_edited.txt',header = TRUE) %>% 
+  mutate(
+    D = as.Date(D)
+  )
+```
+
+```{r}
+# Sensitivity analysis of p2 (0.0043)
+p2 = rnorm(mean=0.0043, sd=0.001, n=500)
+
+yield_test = p2 %>% 
+  map(~yield_anomaly(input.dataframe = clim.df, years = c(1989:2010), p2 = .x))
+
+head(yield_test)
+
+# make a dataframe - not sure how to do this part - what does the 'annual' part mean?
+
+# tmp = map_df(yield_test,`[`, c("annual")) 
+# yield_testdf = data.frame(years.calc = tmp$annual$years.calc, calc.anomaly= tmp$annual$calc.anomaly)
+```
+
+```{r}
+# generate a boxplot
+# ggplot(yield_testdf, aes(year, anomaly, group=year )) +
+#   geom_boxplot()
+```
+
